@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { foodProcess } from '../controller/apiController'
 import Button from '../micros/Button'
 import Input from '../micros/Input'
 import Option from '../micros/Option'
@@ -22,89 +23,7 @@ const Diet = () => {
     top: 0
   })
   
-  const [foods, setFoods] = useState([
-    {
-      name: "yumurta",
-      amount: [
-        {
-          name: "Küçük",
-          carbonhydrate: 0.29,
-          protein: 5.02,
-          fat: 3.8,
-          calorie: 57
-        },
-        {
-          name: "Orta",
-          carbonhydrate: 0.36,
-          protein: 6.28,
-          fat: 4.76,
-          calorie: 72
-        },
-        {
-          name: "Büyük",
-          carbonhydrate: 0.43,
-          protein: 7.54,
-          fat: 5.71,
-          calorie: 86
-        },
-        {
-          name: "Gram",
-          carbonhydrate: 0.01,
-          protein: 0.13,
-          fat: 0.1,
-          calorie: 1
-        },
-        {
-          name: "Su bardağı (200ml)",
-          carbonhydrate: 1.37,
-          protein: 23.86,
-          fat: 18.07,
-          calorie: 272
-        }
-      ],
-    },
-    {
-      name: "yumurta2",
-      amount: [
-        {
-          name: "Küçük",
-          carbonhydrate: 0.29,
-          protein: 5.02,
-          fat: 3.8,
-          calorie: 57
-        },
-        {
-          name: "Orta",
-          carbonhydrate: 0.36,
-          protein: 6.28,
-          fat: 4.76,
-          calorie: 72
-        },
-        {
-          name: "Büyük",
-          carbonhydrate: 0.43,
-          protein: 7.54,
-          fat: 5.71,
-          calorie: 86
-        },
-        {
-          name: "Gram",
-          carbonhydrate: 0.01,
-          protein: 0.13,
-          fat: 0.1,
-          calorie: 1
-        },
-        {
-          name: "Su bardağı (200ml)",
-          carbonhydrate: 1.37,
-          protein: 23.86,
-          fat: 18.07,
-          calorie: 272
-        }
-      ],
-    },
-    
-  ])
+  const [foods, setFoods] = useState([])
  
   const checkMouse = (e) => {
     setMousePosition({
@@ -126,17 +45,22 @@ const Diet = () => {
       return value.name.toLowerCase().includes(searchWord)
     })
     setfilteredFoods(newFilter)
-  }, [searchWord])  
+  }, [searchWord, foods])  
 
   useEffect(() => {
     newDietName === "" ? setDisabled(true) : setDisabled(false)
   }, [newDietName])
   
+  useEffect(() => {
+    if(foods.length < 1){
+      foodProcess(["None", "Kendim"], foods, setFoods, "/getAllFood")
+    }  
+  }, [foods])
  
   
 
   return (
-    <div className='flex w-[1000px] h-full text-black z-10 text-center font-medium'>
+    <div className='flex h-full w-full text-black z-10 text-center font-medium'>
         <div className='flex flex-col shadow-md shadow-black bg-slate-300 w-full h-full mx-2 rounded-3xl p-3'>
           <div>
             <Input type= {"search"} placeholder={"Aradığınız ürünü yazınız."} setState={setSearchWord} />
@@ -396,7 +320,7 @@ const Diet = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td className='text-center text-end'>
+                      <td className='text-end'>
                         Protein:
                       </td>
                       <td>
@@ -404,7 +328,7 @@ const Diet = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td className='text-center text-end'>
+                      <td className='text-end'>
                         Yağ:
                       </td>
                       <td>
@@ -412,7 +336,7 @@ const Diet = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td className='text-center text-end'>
+                      <td className='text-end'>
                         Kalori:
                       </td>
                       <td >
@@ -431,24 +355,29 @@ const Diet = () => {
                       />
                   </div>
                   <div className='flex w-max'>
-                    <Button disabled={disabled} handleOnClick={() => {     
+                    <Button disabled={disabled} 
+                    handleOnClick={() => {     
                       foods.every((food) => food.name !== newDietName) && 
-                      setFoods(() => {return [
-                        ...foods, 
-                        {
-                          name: newDietName,
-                          amount: [
-                            {
-                              name: "belirlediğiniz",
-                              carbonhydrate: carbonhydrate,
-                              protein: protein,
-                              fat: fat,
-                              calorie: kcal
-                            }
-                          ]
-                        }
-                      ]})
-                    }} >Ekle</Button>
+                        foodProcess(
+                          "Kendim", 
+                          foods, 
+                          setFoods, 
+                          "/addFood", 
+                          {
+                            name: newDietName,
+                            amount: [
+                              {
+                                name: "Belirlediğiniz",
+                                carbonhydrate: carbonhydrate,
+                                protein: protein,
+                                fat: fat,
+                                calorie: kcal
+                              }
+                            ] 
+                          }
+                        )   
+                      }
+                    }>Ekle</Button>
                   </div>
               </div>  
             </div>

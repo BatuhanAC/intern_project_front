@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { progressProcess } from '../controller/apiController'
 import Button from '../micros/Button'
 import Label from '../micros/Label'
 import Option from '../micros/Option'
@@ -19,9 +20,9 @@ const Progress = () => {
   const days = ["Pzr", "Pzts", "Salı", "Çrş", "Prş", "Cuma", "Cmts"]
   const now = new Date()
   const [today, setToday] = useState( () => {
-    const month = (now.getMonth()+1) < 10 ? `0${now.getMonth()+1}` : `${now.getMonth+1}`
+    const month = (now.getMonth()+1) < 10 ? `0${now.getMonth()+1}` : `${now.getMonth()+1}`
     return now.getDate() >= 10 ? `${now.getFullYear()}${now.getMonth()+1}${now.getDate()}` :
-    `${now.getFullYear()}${month}0${now.getDate()}`
+    `${now.getFullYear()}${month}0${now.getDate().toString()}`
   })
   const getLastWeek = new Date()
   getLastWeek.setDate(new Date().getDate()-6)
@@ -30,53 +31,8 @@ const Progress = () => {
     return getLastWeek.getDate() >= 10 ? `${getLastWeek.getFullYear()}${month}${getLastWeek.getDate()}` :
     `${getLastWeek.getFullYear()}${month}0${getLastWeek.getDate()}`
   })
-  
-  const [data, setData] = useState([
-    {
-      neck: 37,
-      chest: 82,
-      waist: 88,
-      hip: 90,
-      arm: 34,
-      weight: 74,
-      fat: 18,
-      date: 20221009,
-      day: 0
-    },
-    {
-      neck: 38,
-      chest: 83,
-      waist: 89,
-      hip: 91,
-      arm: 35,
-      weight: 75,
-      fat: 19,
-      date: 20221012,
-      day: 3
-    },
-    {
-      neck: 39,
-      chest: 84,
-      waist: 90,
-      hip: 92,
-      arm: 36,
-      weight: 76,
-      fat: 20,
-      date: 20221010,
-      day: 1
-    },
-    {
-      neck: 40,
-      chest: 85,
-      waist: 91,
-      hip: 93,
-      arm: 37,
-      weight: 77,
-      fat: 21,
-      date: 20221011,
-      day: 2
-    }
-  ])
+
+  const [data, setData] = useState([])
 
   useEffect(() => {
     setWeeklyOrder(() => {
@@ -90,6 +46,9 @@ const Progress = () => {
     }, [])
 
   useEffect(() => {
+    if(newData.date)
+      progressProcess("Kendim", null, "/addProgress", newData)
+
     if(!(data.find((arg) => arg.date ===parseInt(today))?.date===parseInt(today))){
       setData([...data,newData])
     }
@@ -102,6 +61,9 @@ const Progress = () => {
   }, [newData])
 
   useEffect(() => {
+    if(data.length < 1)
+      progressProcess("Kendim", setData, "/getAllProgress")
+
     setWeeklyOrder(() => {
       data.map((argData) => {
         if(argData.date <= parseInt(today) && argData.date >= parseInt(lastWeek)){
