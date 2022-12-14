@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import Cookies from 'universal-cookie'
 import { progressProcess } from '../controller/apiController'
 import Button from '../micros/Button'
 import Label from '../micros/Label'
@@ -7,6 +8,7 @@ import Select from '../micros/Select'
 
 
 const Progress = () => {
+  const cookie = new Cookies()
   const [range, setRange] = useState(0)
   const [weight, setWeight] = useState(0)
   const [fat, setFat] = useState(0)
@@ -47,7 +49,7 @@ const Progress = () => {
 
   useEffect(() => {
     if(newData.date)
-      progressProcess("Kendim", null, "/addProgress", newData)
+      progressProcess(cookie.get("jwt_auth"), null, "/addProgress", newData)
 
     if(!(data.find((arg) => arg.date ===parseInt(today))?.date===parseInt(today))){
       setData([...data,newData])
@@ -62,7 +64,7 @@ const Progress = () => {
 
   useEffect(() => {
     if(data.length < 1)
-      progressProcess("Kendim", setData, "/getAllProgress")
+      progressProcess(cookie.get("jwt_auth"), setData, "/getAllProgress")
 
     setWeeklyOrder(() => {
       data.map((argData) => {

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 
 //Denemelik Data
 import data from "../deleteAfter/data.json";
+import Button from '../micros/Button';
 
 const Photos = () => {
   const [datas, setDatas] = useState(data.resources)
@@ -129,7 +130,6 @@ const Photos = () => {
                 />
               </a>
               <a
-                
                 className="h-full w-full aspect-square block absolute top-0 left-0 transition-opacity duration-300 opacity-0 hover:opacity-100 bg-blue-800/75 z-10"
               >
                 <h3 className="text-white py-6 px-3 mx-auto text-xl">
@@ -140,6 +140,10 @@ const Photos = () => {
           );
         })}
       </div>
+      
+    </div>
+    <div className='flex items-center justify-center mt-7'>
+      <Button handleOnClick={() => {}}>Fotoğraf Yükle</Button>
     </div>
   </div>
   {
@@ -187,6 +191,9 @@ const Photos = () => {
       </div>
     )
   }
+  <div className='absolute w-32 right-1/4 flex items-center justify-center font-extrabold'>
+    BU SAYFA FOTOĞRAF DEPOLAMA MALİYETİ DOLAYISIYLA SADECE DEMO HALİYLEDİR VE İŞLEVSİZDİR.
+  </div>
   </>
   )
 }

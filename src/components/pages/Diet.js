@@ -3,8 +3,10 @@ import { foodProcess } from '../controller/apiController'
 import Button from '../micros/Button'
 import Input from '../micros/Input'
 import Option from '../micros/Option'
+import Cookies from "universal-cookie"
 
 const Diet = () => {
+  const cookie = new Cookies()
   const [searchWord, setSearchWord] = useState("")
   const [filteredFoods, setfilteredFoods] = useState([])
   const [chosenFoods, setChosenFoods] = useState([])
@@ -42,23 +44,22 @@ const Diet = () => {
 
   useEffect(() => {
     const newFilter = foods.filter((value) => {
-      return value.name.toLowerCase().includes(searchWord)
+      return value.name.toLocaleLowerCase("tr-TR").includes(searchWord.toLocaleLowerCase("tr-TR"))
     })
-    setfilteredFoods(newFilter)
+    setfilteredFoods([...newFilter])
   }, [searchWord, foods])  
 
   useEffect(() => {
-    newDietName === "" ? setDisabled(true) : setDisabled(false)
-  }, [newDietName])
+    newDietName.trim() === "" ? setDisabled(true) : 
+    foods.every((food) => food.name.trim().toLowerCase() !== newDietName.trim().toLowerCase()) ? setDisabled(false) : setDisabled(true)  
+  }, [newDietName, foods])
   
   useEffect(() => {
     if(foods.length < 1){
-      foodProcess(["None", "Kendim"], foods, setFoods, "/getAllFood")
+      foodProcess(cookie.get("jwt_auth"), foods, setFoods, "/getAllFood")
     }  
-  }, [foods])
+  }, [foods, cookie])
  
-  
-
   return (
     <div className='flex h-full w-full text-black z-10 text-center font-medium'>
         <div className='flex flex-col shadow-md shadow-black bg-slate-300 w-full h-full mx-2 rounded-3xl p-3'>
@@ -69,10 +70,11 @@ const Diet = () => {
           <div className='flex flex-wrap w-full h-full mt-[2%] p-[1%] overflow-y-auto justify-center  '>
             {
               searchWord === "" && (
-                foods.map((food) => {
+                foods.map((food, index) => {
                   return (
-                    <>
+                    <div key={index} className="m-[1%]">
                       <button 
+                        key={index}
                         className='w-fit p-2 h-min ml-[1%] cursor-pointer border-2 border-black bg-white rounded-3xl shadow-md shadow-black hover:border-white hover:bg-black hover:shadow-white hover:text-white'
                         onClick={() => {
                           if(chosenFoods.findIndex((arg) => arg.name === food.name) === -1){
@@ -163,17 +165,18 @@ const Diet = () => {
                           </div>
                         )
                       }
-                    </>
+                    </div>
                   )
                 })
               )
             }
             {
               searchWord !== "" && (
-                filteredFoods.map((food) => {
+                filteredFoods.map((food, index) => {
                   return (
-                    <>
+                    <div key={index} className="m-[1%]">
                       <button 
+                        key={index}
                         className='w-fit p-2 h-min ml-[1%] cursor-pointer border-2 border-black bg-white rounded-3xl shadow-md shadow-black hover:border-white hover:bg-black hover:shadow-white hover:text-white'
                         onClick={() => {
                           if(chosenFoods.findIndex((arg) => arg.name === food.name) === -1){
@@ -264,7 +267,7 @@ const Diet = () => {
                           </div>
                         )
                       }
-                    </>
+                    </div>
                   )
                 })
               )
@@ -274,9 +277,10 @@ const Diet = () => {
         <div className='flex flex-col shadow-md shadow-black bg-slate-200 w-full h-full mx-2 rounded-3xl'>
           <div className='flex flex-wrap w-full h-full mt-[2%] p-[1%] overflow-y-auto'>
           {
-            chosenFoods.map((chosenOne) => {
+            chosenFoods.map((chosenOne, index) => {
               return (
                   <button 
+                  key={index}
                   className='w-fit p-2 h-min ml-[1%] cursor-pointer border-2 border-black bg-white rounded-3xl shadow-md shadow-black hover:border-white hover:bg-black hover:shadow-white hover:text-white'
                   onClick={() => {
                     chosenFoods.splice(chosenFoods.findIndex((arg) => arg.name === chosenOne.name), 1)
@@ -357,9 +361,9 @@ const Diet = () => {
                   <div className='flex w-max'>
                     <Button disabled={disabled} 
                     handleOnClick={() => {     
-                      foods.every((food) => food.name !== newDietName) && 
+                       
                         foodProcess(
-                          "Kendim", 
+                          cookie.get("jwt_auth"), 
                           foods, 
                           setFoods, 
                           "/addFood", 

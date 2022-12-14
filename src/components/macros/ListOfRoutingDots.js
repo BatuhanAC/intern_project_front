@@ -1,4 +1,5 @@
 import React from 'react'
+import Cookies from "universal-cookie"
 import { NavLink } from "react-router-dom";
 import {IoPersonOutline} from "react-icons/io5"
 import {GiMuscleUp, GiFat, GiShinyApple} from "react-icons/gi"
@@ -7,9 +8,11 @@ import {MdCalculate} from  'react-icons/md'
 import {BsCalculator} from 'react-icons/bs'
 import {RiLogoutCircleLine} from 'react-icons/ri'
 function ListOfRoutingDots() {
+  const cookie = new Cookies()
 
   const logout = () => {
     if (localStorage.getItem("isLogged") !== "false") {
+      cookie.remove("jwt_auth")
       localStorage.setItem("isLogged", false)
       }
     }

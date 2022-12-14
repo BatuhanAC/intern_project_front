@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useNavigate} from "react-router-dom";
 import Button from "../micros/Button";
 import Input from "../micros/Input";
+import Cookies from "universal-cookie"
 import { signProcess } from "../controller/apiController";
 
 const Login = () => {
@@ -19,6 +20,8 @@ const Login = () => {
 
   const navigate = useNavigate()
 
+  const cookie = new Cookies()
+
   const handleLogin = e => {
     e.preventDefault()
     signProcess(email, password, setResponse, "/login")
@@ -34,6 +37,7 @@ const Login = () => {
     }
 
     if(response.success && localStorage.getItem("isLogged") === "false") {
+      cookie.set("jwt_auth", response.token)
       localStorage.setItem("isLogged", true)
       navigate('/')
     }

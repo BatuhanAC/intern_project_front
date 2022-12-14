@@ -38,12 +38,10 @@ export const signProcess = (email, password, setter, reqName, name="", lastName=
   
 }
 
-export const foodProcess = (owner, food, setter, reqName, newFood) => {
+export const foodProcess = (token, food, setter, reqName, newFood) => {
   if(reqName === "/getAllFood"){
     axios
-   .post(`${baseUrl}${reqName}`, {
-    owner:owner
-   })
+   .get(`${baseUrl}${reqName}`, {headers: {"Authorization":`Bearer ${token}`}})
    .then((response) => {
     setter([...food, ...response.data.data])
    })
@@ -55,9 +53,8 @@ export const foodProcess = (owner, food, setter, reqName, newFood) => {
     axios
    .post(`${baseUrl}${reqName}`, {
     name:newFood.name,
-    owner:owner,
     amount:newFood.amount
-   })
+   }, {headers: {"Authorization":`Bearer ${token}`}})
    .then((response) => {
     setter([...food, response.data.data])
    })
@@ -68,12 +65,10 @@ export const foodProcess = (owner, food, setter, reqName, newFood) => {
   
 }
 
-export const progressProcess = (owner, setter, reqName, progressData) => {
+export const progressProcess = (token, setter, reqName, progressData) => {
   if(reqName === "/getAllProgress"){
     axios
-      .post(`${baseUrl}${reqName}`, {
-        owner: owner
-      })
+      .get(`${baseUrl}${reqName}`, {headers: {"Authorization":`Bearer ${token}`}})
       .then((response) => {
         setter(response.data.data.values)
       })
@@ -85,11 +80,10 @@ export const progressProcess = (owner, setter, reqName, progressData) => {
   if(reqName === "/addProgress"){
     axios
       .post(`${baseUrl}${reqName}`, {
-        owner,
         values: [
           progressData
         ]
-      })
+      }, {headers: {"Authorization":`Bearer ${token}`}})
       .then((response) => {
         if(response.data.success)
           console.log("Success")
