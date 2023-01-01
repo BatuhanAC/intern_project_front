@@ -6,9 +6,13 @@ import Label from '../micros/Label'
 import Option from '../micros/Option'
 import Select from '../micros/Select'
 
+const cookie = new Cookies()
+const now = new Date()
+const getLastWeek = new Date()
+getLastWeek.setDate(new Date().getDate()-6)
+const days = ["Pzr", "Pzts", "Salı", "Çrş", "Prş", "Cuma", "Cmts"]
 
 const Progress = () => {
-  const cookie = new Cookies()
   const [range, setRange] = useState(0)
   const [weight, setWeight] = useState(0)
   const [fat, setFat] = useState(0)
@@ -19,46 +23,59 @@ const Progress = () => {
   const [arm, setArm] = useState(0)
   const [newData, setNewData] = useState({})
   const [weeklyOrder, setWeeklyOrder] = useState([{},{},{},{},{},{},{}])
-  const days = ["Pzr", "Pzts", "Salı", "Çrş", "Prş", "Cuma", "Cmts"]
-  const now = new Date()
-  const [today, setToday] = useState( () => {
-    const month = (now.getMonth()+1) < 10 ? `0${now.getMonth()+1}` : `${now.getMonth()+1}`
-    return now.getDate() >= 10 ? `${now.getFullYear()}${now.getMonth()+1}${now.getDate()}` :
-    `${now.getFullYear()}${month}0${now.getDate().toString()}`
-  })
-  const getLastWeek = new Date()
-  getLastWeek.setDate(new Date().getDate()-6)
-  const [lastWeek, setlastWeek] = useState(() => {
-    const month = getLastWeek.getMonth()+1 < 10 ? `0${getLastWeek.getMonth()+1}` : `${getLastWeek.getMonth()+1}`
-    return getLastWeek.getDate() >= 10 ? `${getLastWeek.getFullYear()}${month}${getLastWeek.getDate()}` :
-    `${getLastWeek.getFullYear()}${month}0${getLastWeek.getDate()}`
-  })
-
+  const [today, setToday] = useState()
+  const [lastWeek, setlastWeek] = useState()
   const [data, setData] = useState([])
 
   useEffect(() => {
-    setWeeklyOrder(() => {
+    setToday(() => {
+      const month = (now.getMonth()+1) < 10 ? `0${now.getMonth()+1}` : `${now.getMonth()+1}`
+
+      return now.getDate() >= 10 ? `${now.getFullYear()}${now.getMonth()+1}${now.getDate()}` :
+      `${now.getFullYear()}${month}0${now.getDate().toString()}`
+    })
+
+    setlastWeek(() => {
+      const month = getLastWeek.getMonth()+1 < 10 ? `0${getLastWeek.getMonth()+1}` : `${getLastWeek.getMonth()+1}`
+      return getLastWeek.getDate() >= 10 ? `${getLastWeek.getFullYear()}${month}${getLastWeek.getDate()}` :
+      `${getLastWeek.getFullYear()}${month}0${getLastWeek.getDate()}`
+    })
+
+    setWeeklyOrder((w) => {
         for (let i = 1; i <= 7; i++) {
           if(now.getDay()+i <= 6){
-            weeklyOrder[i-1].day = now.getDay()+i
-          }else weeklyOrder[i-1].day = now.getDay()+i-7      
+            w[i-1].day = now.getDay()+i
+          }else w[i-1].day = now.getDay()+i-7      
         }
-        return weeklyOrder 
+        return [...w] 
       })
     }, [])
 
   useEffect(() => {
-    if(newData.date)
-      progressProcess(cookie.get("jwt_auth"), null, "/addProgress", newData)
-
-    if(!(data.find((arg) => arg.date ===parseInt(today))?.date===parseInt(today))){
-      setData([...data,newData])
-    }
-    else {
-      setData(data.map(
-        item => item.date === parseInt(today) ?
-        newData : item
-      ))
+    if(newData.date){
+      if(!(data.find((arg) => arg.date ===parseInt(today))?.date===parseInt(today))){
+        progressProcess(cookie.get("jwt_auth"), null, "/addProgress", newData)
+        setData((d) => [...d, newData])
+      }
+      else {
+        setData((d) => {
+            let previousValue = d.find(item => item.date === parseInt(today))
+            let currentValue = {
+              neck: newData["neck"] === 0 ? previousValue["neck"] : newData["neck"],
+              chest: newData["chest"] === 0 ? previousValue["chest"] : newData["chest"],
+              waist: newData["waist"] === 0 ? previousValue["waist"] : newData["waist"],
+              hip: newData["hip"] === 0 ? previousValue["hip"] : newData["hip"],
+              arm: newData["arm"] === 0 ? previousValue["arm"] : newData["arm"],
+              weight: newData["weight"] === 0 ? previousValue["weight"] : newData["weight"],
+              fat: newData["fat"] === 0 ? previousValue["fat"] : newData["fat"],
+              date: newData["date"],
+              day: newData["day"]
+            }
+            progressProcess(cookie.get("jwt_auth"), null, "/addProgress", currentValue)
+            return [...d.filter(item => item.date !== parseInt(today)), currentValue]
+          }
+        )
+      }
     }
   }, [newData])
 
@@ -66,13 +83,13 @@ const Progress = () => {
     if(data.length < 1)
       progressProcess(cookie.get("jwt_auth"), setData, "/getAllProgress")
 
-    setWeeklyOrder(() => {
-      data.map((argData) => {
+    setWeeklyOrder((w) => {
+      data.forEach((argData) => {
         if(argData.date <= parseInt(today) && argData.date >= parseInt(lastWeek)){
-          weeklyOrder[weeklyOrder.findIndex((argWeekly) => argData.day === argWeekly.day)] = argData
+          w[w.findIndex((argWeekly) => argData.day === argWeekly.day)] = argData
         }
       })
-      return [...weeklyOrder]
+      return [...w]
     })
   }, [data])
 
@@ -118,7 +135,7 @@ const Progress = () => {
           </label>
         </div>  
         {
-          range == 0 && (
+          range === 0 && (
             <table className='table-auto min-w-max'>
               <thead>
                 <tr>
@@ -147,9 +164,9 @@ const Progress = () => {
               </thead>
               <tbody>
                 {
-                  weeklyOrder.map((arg) => {
+                  weeklyOrder.map((arg, key) => {
                     return (
-                      <tr className=' 2xl:h-12 xl:h-11 md:h-10 sm:h-4 h-1'>
+                      <tr key={key} className=' 2xl:h-12 xl:h-11 md:h-10 sm:h-4 h-1'>
                         <td className='font-bold'>
                           {days[arg.day]}:
                         </td>

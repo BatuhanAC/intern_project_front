@@ -14,6 +14,13 @@ const CalorieCalculator = () => {
   const [movement, setMovement] = useState("")
   const [result, setResult] = useState(0)
 
+  const calculate = (weight, height, age, movement, gender, fat) => {
+    if(gender===1){ 
+      setResult((13.397*weight+4.799*height-5.677*age+88.362+movement/7).toFixed(2))
+    }
+    else setResult((9.247*weight+3.098*height- 4.330*age+447.593+movement/7).toFixed(2))
+  }
+
   return (
     <Div>
     <label>
@@ -94,10 +101,7 @@ const CalorieCalculator = () => {
     </label>
     <Button handleOnClick={
       ()=> {
-        if(gender===1){ 
-          setResult((13.397*weight+4.799*height-5.677*age+88.362+movement/7).toFixed(2))
-        }
-        else setResult((9.247*weight+3.098*height- 4.330*age+447.593+movement/7).toFixed(2))
+        calculate(weight,height,age,movement,gender,fat)
         }
       }>Hesapla</Button>
   </Div>

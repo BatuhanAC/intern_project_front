@@ -6,7 +6,7 @@ import Option from '../micros/Option'
 import Cookies from "universal-cookie"
 
 const Diet = () => {
-  const cookie = new Cookies()
+  const [cookie, setCookie] = useState(null)
   const [searchWord, setSearchWord] = useState("")
   const [filteredFoods, setfilteredFoods] = useState([])
   const [chosenFoods, setChosenFoods] = useState([])
@@ -24,7 +24,6 @@ const Diet = () => {
     left: 0,
     top: 0
   })
-  
   const [foods, setFoods] = useState([])
  
   const checkMouse = (e) => {
@@ -35,6 +34,7 @@ const Diet = () => {
   }
   
   useEffect(() => {
+    setCookie(new Cookies())
     document.addEventListener('mousemove', checkMouse)
     return () => {
       document.removeEventListener('mousemove', checkMouse)
@@ -55,7 +55,7 @@ const Diet = () => {
   }, [newDietName, foods])
   
   useEffect(() => {
-    if(foods.length < 1){
+    if(foods.length < 1 && cookie != null){
       foodProcess(cookie.get("jwt_auth"), foods, setFoods, "/getAllFood")
     }  
   }, [foods, cookie])
