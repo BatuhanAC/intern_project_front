@@ -25,13 +25,13 @@ function App() {
     <div className="flex h-full bg-slate-300 items-center justify-center">
       <div className={`
       ${(location.pathname !== "/diet" && location.pathname !== "/progress" && location.pathname !== "/photos" ) 
-      && "flex flex-col fixed w-full bg-transparent items-center justify-center aspect-square z-0"}
+      && "flex flex-col w-full bg-transparent items-center justify-center z-0"}
       ${(location.pathname === "/diet" || location.pathname === "/progress" || location.pathname === "/photos" ) 
       && "flex flex-col absolute min-w-[95%] min-h-[95%] bg-transparent items-center justify-center z-0"}
       `}>
         {location.pathname !== "/login" && <ListOfRoutingDots/>}
         <div className={`
-        ${location.pathname === "/login" && "bg-blue-600 shadow-blue-600 min-w-[30%] aspect-[1/1] rounded-full "}
+        ${location.pathname === "/login" && "bg-blue-600 shadow-blue-600 flex aspect-[1/1] rounded-full "}
         ${location.pathname === "/" && "bg-blue-600 shadow-blue-600 min-w-[30%] aspect-[1/1] rounded-full "}
         ${location.pathname === "/account" && "bg-yellow-500 shadow-yellow-500 min-w-[30%]  aspect-[1/1] rounded-full "}
         ${location.pathname === "/calorie-calculator" && "shadow-pink-500 bg-pink-500 min-w-[30%] aspect-[1/1] rounded-full "}

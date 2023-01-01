@@ -59,7 +59,7 @@ const Login = () => {
 
 
   return (
-    <div className='flex flex-col justify-center items-center p-12 rounded-3xl z-0'>
+    <div className='flex flex-col justify-center items-center rounded-3xl z-0'>
       <div className='flex flex-row'>
         <button className={activeLogin ? "font-bold text-lg bg-blue-500 p-3 rounded-l-xl border-r text-white text-center cursor-default" :
          "font-bold text-lg bg-blue-300 p-3 rounded-l-xl border-r text-white text-center cursor-default"}
@@ -73,13 +73,13 @@ const Login = () => {
 
       </div>
       { activeLogin ? 
-      <form className="flex-col flex mt-8 gap-5 min-w-[350px]" onSubmit={handleLogin}>
+      <form className="flex-col flex mt-8 gap-5 lg:min-w-[350px] min-w-[300px] " onSubmit={handleLogin}>
         <Input type="email" placeholder="E-mail" setState={setEmail}/>
         <Input type="password" placeholder="Password" setState={setPassword}/>
         <Button>Login</Button>
       </form>
       :
-      <form className="flex-col flex mt-8 gap-5 min-w-[350px]" onSubmit={handleSignUp}>
+      <form className="flex-col flex mt-8 gap-5 lg:min-w-[350px] min-w-[300px] " onSubmit={handleSignUp}>
         <Input type="email" placeholder="E-mail" setState={setEmail}/>
         <div className="flex">
           <Input type="password" placeholder="Password" setState={setPassword}/>
