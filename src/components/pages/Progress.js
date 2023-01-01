@@ -104,21 +104,23 @@ const Progress = () => {
           <Label type={"number"} placeholder="cm" setState={setHip} >Kalça Ölçünüz</Label>
           <Label type={"number"} placeholder="cm" setState={setArm} >Kol Ölçünüz</Label>
           <div className='flex items-center justify-center'>
-            <Button handleOnClick={() => {
-              setNewData({
-                neck: neck,
-                chest: chest,
-                waist: waist,
-                hip: hip,
-                arm: arm,
-                weight: weight,
-                fat: fat,
-                date: parseInt(today),
-                day: parseInt(now.getDay())
-              })
-            }}>
-              Kaydet
-            </Button>
+            <div>
+              <Button handleOnClick={() => {
+                setNewData({
+                  neck: neck,
+                  chest: chest,
+                  waist: waist,
+                  hip: hip,
+                  arm: arm,
+                  weight: weight,
+                  fat: fat,
+                  date: parseInt(today),
+                  day: parseInt(now.getDay())
+                })
+              }}>
+                Kaydet
+              </Button>
+            </div>
           </div>
       </div>
       <div className='flex flex-col shadow-md shadow-emerald-200 bg-emerald-200 w-full h-full mx-2 rounded-3xl'>

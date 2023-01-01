@@ -30,7 +30,7 @@ const CalorieCalculator = () => {
       </div>
     </label>
     <Form>
-      <div className='grid grid-cols-2 gap-y-5 '>
+      <div className='grid grid-cols-2 gap-y-4 '>
         <label>
           Boy
           <div>
@@ -67,7 +67,7 @@ const CalorieCalculator = () => {
     <label>
       Egzersiz Seviyesi
       <div>
-        <select className='border-2 p-3 text-center text-black w-[75%] border-blue-200 focus:border-blue-600 outline-none rounded-2xl font-semibold' 
+        <select className='border-2 p-2 text-center text-black w-[75%] border-blue-200 focus:border-blue-600 outline-none rounded-2xl font-semibold' 
         onChange={(e)=>{
           if(e.target.value <= 2){
             setMovement(e.target.value*400)
@@ -99,11 +99,14 @@ const CalorieCalculator = () => {
           Kilonuzu korumak için {result} kalori almalısınız.
         </div>
     </label>
-    <Button handleOnClick={
-      ()=> {
-        calculate(weight,height,age,movement,gender,fat)
-        }
+    <div>
+      <Button handleOnClick={
+        ()=> {
+          calculate(weight,height,age,movement,gender,fat)
+          }
       }>Hesapla</Button>
+    </div>
+    
   </Div>
   )
 }

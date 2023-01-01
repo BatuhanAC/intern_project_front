@@ -41,7 +41,10 @@ const FatPercentage = () => {
           %{result}
       </div>
     </Form>
-    <Button handleOnClick={()=> {setResult(((495/(1.0324-(0.19077*Math.log10(waist-neck))+(0.15456*Math.log10(height))))-450).toFixed(1))}}>Hesapla</Button>
+    <div>
+      <Button handleOnClick={()=> {setResult(((495/(1.0324-(0.19077*Math.log10(waist-neck))+(0.15456*Math.log10(height))))-450).toFixed(1))}}>Hesapla</Button>
+    </div>
+    
   </Div>
   )
 }
