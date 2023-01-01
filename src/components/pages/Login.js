@@ -73,13 +73,15 @@ const Login = () => {
 
       </div>
       { activeLogin ? 
-      <form className="flex-col flex mt-8 gap-5 lg:min-w-[350px] min-w-[300px] " onSubmit={handleLogin}>
+      <form className="flex-col flex mt-8 gap-5 lg:min-w-[350px] min-w-[300px] items-center justify-center" onSubmit={handleLogin}>
         <Input type="email" placeholder="E-mail" setState={setEmail}/>
         <Input type="password" placeholder="Password" setState={setPassword}/>
-        <Button>Login</Button>
+        <div className="w-1/2">
+          <Button>Login</Button>
+        </div>
       </form>
       :
-      <form className="flex-col flex mt-8 gap-5 lg:min-w-[350px] min-w-[300px] " onSubmit={handleSignUp}>
+      <form className="flex-col flex mt-8 gap-5 lg:min-w-[350px] min-w-[300px] items-center justify-center" onSubmit={handleSignUp}>
         <Input type="email" placeholder="E-mail" setState={setEmail}/>
         <div className="flex">
           <Input type="password" placeholder="Password" setState={setPassword}/>
@@ -89,8 +91,9 @@ const Login = () => {
           <Input type="text" placeholder="Name" setState={setName}/>
           <Input type="text" placeholder="Last Name" setState={setLastName}/>
         </div>
-        
-        <Button disabled={!equalPassword}>SignUp</Button>
+        <div className="w-1/2">
+          <Button disabled={!equalPassword}>SignUp</Button>
+        </div>
       </form>
       }
     </div>
