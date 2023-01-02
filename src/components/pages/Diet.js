@@ -61,8 +61,63 @@ const Diet = () => {
   }, [foods, cookie])
  
   return (
-    <div className='flex h-full w-full text-black z-10 text-center font-medium'>
-        <div className='flex flex-col shadow-md shadow-black bg-slate-300 w-full h-full mx-2 rounded-3xl p-3'>
+    <div className='flex flex-col lg:flex-row h-full w-full gap-3 text-black z-10 text-center font-medium'>
+    {
+      hoveredFood.name &&
+      <div style={{top: `${mousePosition.top}px`, left: `${mousePosition.left}px`}}
+      className="absolute z-50 w-max bg-black text-white rounded-3xl p-4">
+        {
+          <div className='flex flex-col w-max'>
+            <div className='grid grid-cols-1 gap-1 w-full h-full place-items-center'>
+              {hoveredFood.name.toUpperCase()} - {hoveredFood.amount[0].name?.toUpperCase()}
+              <table className='table-auto w-max'>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className='text-end'>
+                      Karbonhidrat:
+                    </td>
+                    <td>
+                      {(hoveredFood.amount[0].carbonhydrate).toFixed(2)} gr
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className='text-end'>
+                      Protein:
+                    </td>
+                    <td>
+                      {(hoveredFood.amount[0].protein).toFixed(2)} gr
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className='text-end'>
+                      Yağ:
+                    </td>
+                    <td>
+                      {(hoveredFood.amount[0].fat).toFixed(2)} gr
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className='text-end'>
+                      Kalori: 
+                    </td>
+                    <td>
+                      {(hoveredFood.amount[0].calorie).toFixed(2)} kcal
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        }
+      </div>
+      }
+        <div className='flex flex-col shadow-md shadow-black bg-slate-300 w-full lg:h-full h-[300px] rounded-3xl p-3'>
           <div>
             <Input type= {"search"} placeholder={"Aradığınız ürünü yazınız."} setState={setSearchWord} />
           </div>
@@ -274,7 +329,7 @@ const Diet = () => {
             }
           </div>    
         </div>
-        <div className='flex flex-col shadow-md shadow-black bg-slate-200 w-full h-full mx-2 rounded-3xl'>
+        <div className='flex flex-col shadow-md shadow-black bg-slate-200 w-full h-full rounded-3xl'>
           <div className='flex flex-wrap w-full h-full mt-[2%] p-[1%] overflow-y-auto'>
           {
             chosenFoods.map((chosenOne, index) => {
@@ -387,61 +442,6 @@ const Diet = () => {
             </div>
           </div>
         </div>
-      {
-        hoveredFood.name &&
-        <div style={{top: `${mousePosition.top-10}px`, left: `${mousePosition.left-25}px`}}
-        className="absolute z-20 w-max bg-black text-white rounded-3xl p-4">
-          {
-            <div className='flex flex-col w-max'>
-              <div className='grid grid-cols-1 gap-1  w-full h-full place-items-center'>
-                {hoveredFood.name.toUpperCase()} - {hoveredFood.amount[0].name?.toUpperCase()}
-                <table className='table-auto w-max'>
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className='text-end'>
-                        Karbonhidrat:
-                      </td>
-                      <td>
-                        {(hoveredFood.amount[0].carbonhydrate).toFixed(2)} gr
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className='text-end'>
-                        Protein:
-                      </td>
-                      <td>
-                        {(hoveredFood.amount[0].protein).toFixed(2)} gr
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className='text-end'>
-                        Yağ:
-                      </td>
-                      <td>
-                        {(hoveredFood.amount[0].fat).toFixed(2)} gr
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className='text-end'>
-                        Kalori: 
-                      </td>
-                      <td>
-                        {(hoveredFood.amount[0].calorie).toFixed(2)} kcal
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          }
-        </div>
-      }
     </div>
   )
 }

@@ -94,8 +94,8 @@ const Progress = () => {
   }, [data])
 
   return (
-    <div className='flex w-full h-full text-black z-10 text-center font-medium'>
-      <div className='grid grid-cols-2 gap-2 shadow-md shadow-emerald-300 bg-emerald-300 w-full h-full mx-2 rounded-3xl p-3'>
+    <div className='flex flex-col lg:flex-row gap-4 w-full h-full text-black z-10 text-center font-medium'>
+      <div className='grid grid-cols-2 gap-2 shadow-md shadow-emerald-300 bg-emerald-300 w-full h-full rounded-3xl p-3'>
           <Label type={"number"} placeholder="kg" setState={setWeight} >Kilo</Label>
           <Label type={"number"} placeholder="%" setState={setFat} >Yağ Oranı</Label>
           <Label type={"number"} placeholder="cm" setState={setNeck} >Boyun Ölçünüz</Label>
@@ -123,7 +123,7 @@ const Progress = () => {
             </div>
           </div>
       </div>
-      <div className='flex flex-col shadow-md shadow-emerald-200 bg-emerald-200 w-full h-full mx-2 rounded-3xl'>
+      <div className='flex flex-col shadow-md shadow-emerald-200 bg-emerald-200 w-full h-full rounded-3xl'>
         <div className='flex justify-center h-[18%]' >
           <label className='flex flex-col w-[35%] '>
             Gelişim Aralığı

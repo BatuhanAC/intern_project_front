@@ -5,6 +5,9 @@ import Input from "../micros/Input";
 import Cookies from "universal-cookie"
 import { signProcess } from "../controller/apiController";
 
+const cookie = new Cookies()
+const date = new Date()
+date.setTime(date.getTime() + (60*60*24*1000))
 const Login = () => {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
@@ -20,7 +23,7 @@ const Login = () => {
 
   const navigate = useNavigate()
 
-  const cookie = new Cookies()
+
 
   const handleLogin = e => {
     e.preventDefault()
@@ -37,7 +40,7 @@ const Login = () => {
     }
 
     if(response.success && localStorage.getItem("isLogged") === "false") {
-      cookie.set("jwt_auth", response.token)
+      cookie.set("jwt_auth", response.token, {expires: date})
       localStorage.setItem("isLogged", true)
       navigate('/')
     }

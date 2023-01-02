@@ -55,7 +55,7 @@ const Photos = () => {
 
   return (
     <>
-    <div className=" w-[34.5%]">
+    <div className="w-[340px] lg:w-[33.5%] z-50">
     <div className="relative overflow-hidden">
       <div className="flex justify-between absolute w-full h-full">
         <button
@@ -113,7 +113,7 @@ const Photos = () => {
           return (
             <div
               key={index}
-              className="carousel-item text-center relative sm:h-40 md:h-52 xl:h-80 3xl:h-[402px] snap-start"
+              className="carousel-item text-center relative h-96 sm:h-40 md:h-52 xl:h-80 3xl:h-[402px] snap-start"
               onClick={() => {
                 setDateInfo(resource.date)
               }}
@@ -121,7 +121,7 @@ const Photos = () => {
               <a
                 href={resource.link}
                 className="h-full w-full aspect-square block bg-origin-padding bg-left-top bg-cover bg-no-repeat z-0"
-                style={{ backgroundImage: `url(${resource.imageUrl || ''})` }}
+                style={{ backgroundImage: `url(${resource.imageUrl || ''})`}}
               >
                 <img
                   src={resource.imageUrl || ''}
@@ -129,13 +129,13 @@ const Photos = () => {
                   className="w-full aspect-square hidden"
                 />
               </a>
-              <a
+              <div
                 className="h-full w-full aspect-square block absolute top-0 left-0 transition-opacity duration-300 opacity-0 hover:opacity-100 bg-blue-800/75 z-10"
               >
-                <h3 className="text-white py-6 px-3 mx-auto text-xl">
+                <h3 className="text-white py-6 lg:px-3 lg:mx-auto text-xl">
                   {`${day}.${month}.${year}`}
                 </h3>
-              </a>
+              </div>
             </div>
           );
         })}
