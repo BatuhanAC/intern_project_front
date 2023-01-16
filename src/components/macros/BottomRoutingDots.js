@@ -15,7 +15,7 @@ function BottomRoutingDots() {
     }
 
   return (
-    <div className="absolute bottom-4 grid grid-flow-col grid-rows-1 lg:mt-4 gap-2">
+    <div className="relative grid grid-flow-col grid-rows-1 lg:mt-4 mt-2 gap-2">
         <NavLink className="flex w-[75px] h-[75px] shadow-lg shadow-emerald-500 bg-emerald-500  rounded-full self-center right-0 items-center justify-center"
       to={"/progress"}>
         <GiMuscleUp size={45} />
