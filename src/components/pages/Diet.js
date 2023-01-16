@@ -4,6 +4,7 @@ import Button from '../micros/Button'
 import Input from '../micros/Input'
 import Option from '../micros/Option'
 import Cookies from "universal-cookie"
+import HoveredFood from '../macros/HoveredFood'
 
 const Diet = () => {
   const [cookie, setCookie] = useState(null)
@@ -61,108 +62,57 @@ const Diet = () => {
   }, [foods, cookie])
  
   return (
-    <div className='flex flex-col lg:flex-row h-full w-full gap-3 text-black z-10 text-center font-medium'>
+    <div className='flex flex-col lg:flex-row h-full w-full gap-3 text-black z-50 text-center font-medium'>
     {
       hoveredFood.name &&
-      <div style={{top: `${mousePosition.top}px`, left: `${mousePosition.left}px`}}
-      className="absolute z-50 w-max bg-black text-white rounded-3xl p-4">
-        {
-          <div className='flex flex-col w-max'>
-            <div className='grid grid-cols-1 gap-1 w-full h-full place-items-center'>
-              {hoveredFood.name.toUpperCase()} - {hoveredFood.amount[0].name?.toUpperCase()}
-              <table className='table-auto w-max'>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className='text-end'>
-                      Karbonhidrat:
-                    </td>
-                    <td>
-                      {(hoveredFood.amount[0].carbonhydrate).toFixed(2)} gr
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className='text-end'>
-                      Protein:
-                    </td>
-                    <td>
-                      {(hoveredFood.amount[0].protein).toFixed(2)} gr
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className='text-end'>
-                      Yağ:
-                    </td>
-                    <td>
-                      {(hoveredFood.amount[0].fat).toFixed(2)} gr
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className='text-end'>
-                      Kalori: 
-                    </td>
-                    <td>
-                      {(hoveredFood.amount[0].calorie).toFixed(2)} kcal
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        }
-      </div>
-      }
-        <div className='flex flex-col shadow-md shadow-black bg-slate-300 w-full lg:h-full h-[300px] rounded-3xl p-3'>
-          <div>
-            <Input type= {"search"} placeholder={"Aradığınız ürünü yazınız."} setState={setSearchWord} />
-          </div>
+      <HoveredFood mousePosition={mousePosition} hoveredFood={hoveredFood}/>
+    }
+      <div className='flex flex-col shadow-md shadow-black bg-slate-300 w-full lg:h-full h-[300px] rounded-3xl p-3'>
+        <div>
+          <Input type= {"search"} placeholder={"Aradığınız ürünü yazınız."} setState={setSearchWord} />
+        </div>
           
-          <div className='flex flex-wrap w-full h-full mt-[2%] p-[1%] overflow-y-auto justify-center  '>
-            {
-              searchWord === "" && (
-                foods.map((food, index) => {
-                  return (
-                    <div key={index} className="m-[1%]">
-                      <button 
-                        key={index}
-                        className='w-fit p-2 h-min ml-[1%] cursor-pointer border-2 border-black bg-white rounded-3xl shadow-md shadow-black hover:border-white hover:bg-black hover:shadow-white hover:text-white'
-                        onClick={() => {
-                          if(chosenFoods.findIndex((arg) => arg.name === food.name) === -1){
-                            setAmountPage(food.name)
-                          }
-                        }}
-                        onMouseOver = {() => {
-                          setHoveredFood(food)
-                        }}
-                        onMouseOut = {() => {
-                          setHoveredFood({})
-                        }}
-                        >
-                        {food.name}
-                      </button> 
-                      {
-                        amountPage === food.name && (
-                          <div className='absolute flex flex-col rounded-3xl shadow-lg shadow-black bg-slate-100 items-center self-center justify-self-center justify-center w-72 aspect-square '>
-                            <div className='flex flex-col basis-2/3'>
-                              {food.name.toUpperCase()}
-                              <div className='flex basis-1/3 items-center'>
-                                <div className='flex basis-1/4 items-end justify-end'>
-                                  <input className='text-black rounded-l-2xl appearance-none border-2 p-3 w-[95%] self-center border-blue-200 focus:border-blue-600 outline-none h-[85%] text-base text-center'
-                                    value={unit} 
-                                    type={"number"}
-                                    min={0}
-                                    onChange= {
-                                      (e) => {
-                                        setUnit(Math.abs(e.target.value))
-                                      }
+        <div className='flex flex-wrap w-full h-full mt-[2%] p-[1%] overflow-y-auto justify-center  '>
+          {
+            searchWord === "" && (
+              foods.map((food, index) => {
+                return (
+                  <div key={index} className="m-[1%]">
+                    <button 
+                      key={index}
+                      className='w-fit p-2 h-min ml-[1%] cursor-pointer border-2 border-black bg-white rounded-3xl shadow-md shadow-black hover:border-white hover:bg-black hover:shadow-white hover:text-white'
+                      onClick={() => {
+                        if(chosenFoods.findIndex((arg) => arg.name === food.name) === -1){
+                          setAmountPage(food.name)
+                        }
+                      }}
+                      onMouseOver = {() => {
+                        setHoveredFood(food)
+                      }}
+                      onMouseOut = {() => {
+                        setHoveredFood({})
+                      }}
+                      >
+                      {food.name}
+                    </button> 
+                    {
+                      amountPage === food.name && (
+                        <div className='absolute flex flex-col rounded-3xl shadow-lg shadow-black bg-slate-100 items-center self-center justify-self-center justify-center w-72 aspect-square '>
+                          <div className='flex flex-col basis-2/3'>
+                            {food.name.toUpperCase()}
+                            <div className='flex basis-1/3 items-center'>
+                              <div className='flex basis-1/4 items-end justify-end'>
+                                <input className='text-black rounded-l-2xl appearance-none border-2 p-3 w-[95%] self-center border-blue-200 focus:border-blue-600 outline-none h-[85%] text-base text-center'
+                                  value={unit} 
+                                  type={"number"}
+                                  min={0}
+                                  onChange= {
+                                    (e) => {
+                                      setUnit(Math.abs(e.target.value))
                                     }
-                                  />
-                                </div>
+                                  }
+                                />
+                              </div>
                                 <div className='flex basis-3/4 w-full  justify-start'>
                                   <select className='border-2  rounded-r-2xl p-3 text-center text-black w-[98%] border-blue-200 focus:border-blue-600 outline-none font-semibold'
                                     value={amount}

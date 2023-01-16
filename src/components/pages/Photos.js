@@ -54,7 +54,53 @@ const Photos = () => {
   }, []);
 
   return (
-    <>
+    <div className='flex w-full gap-6'>
+    {
+    dateInfo && (
+      <div className='relative flex min-w-max h-fit bg-purple-300 shadow-purple-300 shadow-md rounded-3xl p-5 left-1'>
+        <table className='table-auto rounded-3xl'>
+          <caption className='min-w-max font-bold'>Fotoğraf Tarihindeki Ölçüleriniz</caption>
+          <thead>
+            <tr>
+              <th className='w-20'></th>
+              <th className='w-20'></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className='shadow-md shadow-white'>
+              <td className='text-end'>Kilo:</td>
+              <td>{ datas.progress.find((arg) => arg.date === dateInfo).weight }kg</td>
+            </tr>
+            <tr className='shadow-md shadow-white'>
+              <td className='text-end'>Yağ Oranı:</td>
+              <td>%{ datas.progress.find((arg) => arg.date === dateInfo).fat }</td>
+            </tr>
+            <tr className='shadow-md shadow-white'>
+              <td className='text-end'>Boyun:</td>
+              <td>{ datas.progress.find((arg) => arg.date === dateInfo).neck }cm</td>
+            </tr>
+            <tr className='shadow-md shadow-white '>
+              <td className='text-end'>Göğüs:</td>
+              <td>{ datas.progress.find((arg) => arg.date === dateInfo).chest }cm</td>
+            </tr>
+            <tr className='shadow-md shadow-white'>
+              <td className='text-end'>Bel:</td>
+              <td>{ datas.progress.find((arg) => arg.date === dateInfo).waist }cm</td>
+            </tr>
+            <tr className='shadow-md shadow-white'>
+              <td className='text-end'>Kalça:</td>
+              <td>{ datas.progress.find((arg) => arg.date === dateInfo).hip }cm</td>
+            </tr>
+            <tr className='shadow-md shadow-white'>
+              <td className='text-end'>Kol:</td>
+              <td>{ datas.progress.find((arg) => arg.date === dateInfo).arm }cm</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
     <div className="w-[340px] lg:w-[33.5%] z-50">
     <div className="relative overflow-hidden">
       <div className="flex justify-between absolute w-full h-full">
@@ -146,55 +192,11 @@ const Photos = () => {
       <Button handleOnClick={() => {}}>Fotoğraf Yükle</Button>
     </div>
   </div>
-  {
-    dateInfo && (
-      <div className='absolute flex min-w-max bg-purple-300 shadow-purple-300 shadow-md rounded-3xl p-5 left-[18%]'>
-        <table className='table-auto rounded-3xl'>
-          <caption className='min-w-max font-bold'>Fotoğraf Tarihindeki Ölçüleriniz</caption>
-          <thead>
-            <tr>
-              <th className='w-20'></th>
-              <th className='w-20'></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className='shadow-md shadow-white'>
-              <td className='text-end'>Kilo:</td>
-              <td>{ datas.progress.find((arg) => arg.date === dateInfo).weight }kg</td>
-            </tr>
-            <tr className='shadow-md shadow-white'>
-              <td className='text-end'>Yağ Oranı:</td>
-              <td>%{ datas.progress.find((arg) => arg.date === dateInfo).fat }</td>
-            </tr>
-            <tr className='shadow-md shadow-white'>
-              <td className='text-end'>Boyun:</td>
-              <td>{ datas.progress.find((arg) => arg.date === dateInfo).neck }cm</td>
-            </tr>
-            <tr className='shadow-md shadow-white '>
-              <td className='text-end'>Göğüs:</td>
-              <td>{ datas.progress.find((arg) => arg.date === dateInfo).chest }cm</td>
-            </tr>
-            <tr className='shadow-md shadow-white'>
-              <td className='text-end'>Bel:</td>
-              <td>{ datas.progress.find((arg) => arg.date === dateInfo).waist }cm</td>
-            </tr>
-            <tr className='shadow-md shadow-white'>
-              <td className='text-end'>Kalça:</td>
-              <td>{ datas.progress.find((arg) => arg.date === dateInfo).hip }cm</td>
-            </tr>
-            <tr className='shadow-md shadow-white'>
-              <td className='text-end'>Kol:</td>
-              <td>{ datas.progress.find((arg) => arg.date === dateInfo).arm }cm</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    )
-  }
+
   <div className='absolute w-32 right-1/4 flex items-center justify-center font-extrabold'>
     BU SAYFA FOTOĞRAF DEPOLAMA MALİYETİ DOLAYISIYLA SADECE DEMO HALİYLEDİR VE İŞLEVSİZDİR.
   </div>
-  </>
+  </div>
   )
 }
 

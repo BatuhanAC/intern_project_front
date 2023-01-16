@@ -12,7 +12,6 @@ import PrivateRoute from "./components/controller/PrivateRoute";
 import TopRoutingDots from "./components/macros/TopRoutingDots";
 import BottomRoutingDots from "./components/macros/BottomRoutingDots";
 
-
 function App() {
   const location = useLocation();
 
@@ -23,12 +22,12 @@ function App() {
   }
 
   return (
-    <div className="flex w-full h-full bg-slate-300 items-center justify-center">
+    <div className="flex w-screen h-screen bg-slate-300 items-center justify-center">
       <div className={`
       ${(location.pathname !== "/diet" && location.pathname !== "/progress" && location.pathname !== "/photos" ) 
-      && "flex flex-col lg:w-full bg-transparent items-center aspect-square justify-center z-0"}
+      && "flex flex-col bg-slate-300 items-center aspect-square justify-center z-0"}
       ${(location.pathname === "/diet" || location.pathname === "/progress" || location.pathname === "/photos" ) 
-      && "flex flex-col lg:w-[65%] lg:h-[65%] bg-transparent items-center justify-center z-0"}
+      && "flex flex-col bg-slate-300 items-center justify-center z-0"}
       `}>
         {location.pathname !== "/login" && <TopRoutingDots/>}
         <div className={`
@@ -38,9 +37,9 @@ function App() {
         ${location.pathname === "/calorie-calculator" && "shadow-pink-500 bg-pink-500 min-w-[30%] lg:mx-0 mx-1 lg:aspect-[1/1] rounded-full "}
         ${location.pathname === "/fat-percentage" && "shadow-teal-400 bg-teal-400 min-w-[30%] aspect-[1/1] rounded-full "}
         ${location.pathname === "/bmi" && "shadow-black bg-black min-w-[30%] aspect-[1/1] rounded-full "}
-        ${location.pathname === "/diet" && "shadow-white bg-white w-[350px] h-[640px] lg:w-full lg:h-full rounded-3xl "}
+        ${location.pathname === "/diet" && "shadow-white bg-white lg:max-w-4xl rounded-3xl "}
         ${location.pathname === "/progress" && "shadow-emerald-500 bg-emerald-500 lg:mx-0 mx-2 lg:min-w-[68%] lg:aspect-[2/1] rounded-3xl "}
-        ${location.pathname === "/photos" && "shadow-violet-500 bg-violet-500 lg:w-full lg:h-full aspect-[2/1] rounded-3xl "}
+        ${location.pathname === "/photos" && "shadow-violet-500 bg-violet-500 lg:max-w-4xl aspect-[2/1] rounded-3xl "}
         flex items-center p-4 justify-center z-0 shadow-md
         `}>
           <Routes>
@@ -55,9 +54,8 @@ function App() {
             <Route path='photos' element={<PrivateRoute><Photos/></PrivateRoute>} />
           </Routes>
         </div>
-      {location.pathname !== "/login" && <BottomRoutingDots/>}
+      {location.pathname !== "/login" && <BottomRoutingDots/>} 
       </div>
-      
     </div>
   );
 }
