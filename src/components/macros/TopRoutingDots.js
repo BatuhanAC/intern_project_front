@@ -7,7 +7,7 @@ import {BsCalculator} from 'react-icons/bs'
 function TopRoutingDots() {
 
   return (
-    <div className="relative grid grid-flow-col grid-rows-1 lg:mb-4 mb-2 mt-1 gap-2 z-40">
+    <div className="flex flex-row lg:mb-4 mb-2 mt-1 gap-2 z-40">
 
       <NavLink className='flex w-[75px] h-[75px] shadow-lg shadow-yellow-500 bg-yellow-500 rounded-full self-center top-0 items-center justify-center'
       to={"/account"}>

@@ -22,14 +22,15 @@ function App() {
   }
 
   return (
-    <div className="flex w-screen h-screen bg-slate-300 items-center justify-center">
+    <div className="flex flex-col w-screen min-h-screen bg-slate-300 items-center justify-center">
+      {location.pathname !== "/login" && <TopRoutingDots/>}
       <div className={`
       ${(location.pathname !== "/diet" && location.pathname !== "/progress" && location.pathname !== "/photos" ) 
       && "flex flex-col bg-slate-300 items-center aspect-square justify-center z-0"}
       ${(location.pathname === "/diet" || location.pathname === "/progress" || location.pathname === "/photos" ) 
       && "flex flex-col bg-slate-300 items-center justify-center z-0"}
       `}>
-        {location.pathname !== "/login" && <TopRoutingDots/>}
+        
         <div className={`
         ${location.pathname === "/login" && "bg-blue-600 shadow-blue-600 flex aspect-[1/1] rounded-full "}
         ${location.pathname === "/" && "bg-blue-600 shadow-blue-600 aspect-[1/1] rounded-full "}
