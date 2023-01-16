@@ -4,7 +4,8 @@ import Button from "../micros/Button";
 import Input from "../micros/Input";
 import Cookies from "universal-cookie"
 import { signProcess } from "../controller/apiController";
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import ErrorToaster from "../macros/ErrorToaster";
 
 const cookie = new Cookies()
 const date = new Date()
@@ -101,7 +102,7 @@ const Login = () => {
         </div>
       </form>
       }
-      <Toaster toastOptions={{style: {background:"#F75D59", color:"white"}}}/>
+      <ErrorToaster position={"top-center"}/>
     </div>
   );
 }
