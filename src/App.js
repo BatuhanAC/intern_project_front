@@ -36,7 +36,7 @@ function App() {
         ${location.pathname === "/" && "bg-blue-600 shadow-blue-600 aspect-[1/1] rounded-full "}
         ${location.pathname === "/account" && "bg-yellow-500 shadow-yellow-500 min-w-[30%]  aspect-[1/1] rounded-full "}
         ${location.pathname === "/calorie-calculator" && "shadow-pink-500 bg-pink-500 min-w-[30%] lg:mx-0 mx-1 lg:aspect-[1/1] rounded-full "}
-        ${location.pathname === "/fat-percentage" && "shadow-teal-400 bg-teal-400 min-w-[30%] aspect-[1/1] rounded-full "}
+        ${location.pathname === "/fat-percentage" && "shadow-teal-400 bg-teal-400 lg:min-w-[400px] min-w-[95vw] aspect-[1/1] rounded-full "}
         ${location.pathname === "/bmi" && "shadow-black bg-black min-w-[30%] aspect-[1/1] rounded-full "}
         ${location.pathname === "/diet" && "shadow-white bg-white w-screen min-h-min lg:min-h-min lg:max-w-4xl rounded-3xl "}
         ${location.pathname === "/progress" && "shadow-emerald-500 bg-emerald-500 lg:mx-0 mx-2 lg:min-w-[68%] lg:aspect-[2/1] rounded-3xl "}
