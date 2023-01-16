@@ -54,7 +54,7 @@ const Photos = () => {
   }, []);
 
   return (
-    <div className='flex w-full gap-6'>
+    <div className='flex lg:flex-row flex-col w-full gap-6'>
     {
     dateInfo && (
       <div className='relative flex min-w-max h-fit bg-purple-300 shadow-purple-300 shadow-md rounded-3xl p-5 left-1'>
@@ -193,7 +193,7 @@ const Photos = () => {
     </div>
   </div>
 
-  <div className='absolute w-32 right-1/4 flex items-center justify-center font-extrabold'>
+  <div className='flex w-32 right-1/4 items-center justify-center font-extrabold'>
     BU SAYFA FOTOĞRAF DEPOLAMA MALİYETİ DOLAYISIYLA SADECE DEMO HALİYLEDİR VE İŞLEVSİZDİR.
   </div>
   </div>

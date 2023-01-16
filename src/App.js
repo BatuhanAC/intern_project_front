@@ -38,7 +38,7 @@ function App() {
         ${location.pathname === "/calorie-calculator" && "shadow-pink-500 bg-pink-500 min-w-[30%] lg:mx-0 mx-1 lg:aspect-[1/1] rounded-full "}
         ${location.pathname === "/fat-percentage" && "shadow-teal-400 bg-teal-400 min-w-[30%] aspect-[1/1] rounded-full "}
         ${location.pathname === "/bmi" && "shadow-black bg-black min-w-[30%] aspect-[1/1] rounded-full "}
-        ${location.pathname === "/diet" && "shadow-white bg-white lg:max-w-4xl rounded-3xl "}
+        ${location.pathname === "/diet" && "shadow-white bg-white w-screen min-h-min lg:min-h-min lg:max-w-4xl rounded-3xl "}
         ${location.pathname === "/progress" && "shadow-emerald-500 bg-emerald-500 lg:mx-0 mx-2 lg:min-w-[68%] lg:aspect-[2/1] rounded-3xl "}
         ${location.pathname === "/photos" && "shadow-violet-500 bg-violet-500 lg:max-w-4xl aspect-[2/1] rounded-3xl "}
         flex items-center p-4 justify-center z-0 shadow-md
