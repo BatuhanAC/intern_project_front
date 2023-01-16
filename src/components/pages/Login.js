@@ -4,6 +4,7 @@ import Button from "../micros/Button";
 import Input from "../micros/Input";
 import Cookies from "universal-cookie"
 import { signProcess } from "../controller/apiController";
+import toast, { Toaster } from 'react-hot-toast';
 
 const cookie = new Cookies()
 const date = new Date()
@@ -27,8 +28,9 @@ const Login = () => {
 
   const handleLogin = e => {
     e.preventDefault()
-    signProcess(email, password, setResponse, "/login")
+      signProcess(email, password, setResponse, "/login")
   }
+
   const handleSignUp = e => {
     e.preventDefault()
     signProcess(email, password, setResponse, "/register", name, lastName)
@@ -36,10 +38,10 @@ const Login = () => {
 
   useEffect(() => {
     if(response.success === false) {
-    console.log(response.message)
+      toast(response.message)
     }
 
-    if(response.success && localStorage.getItem("isLogged") === "false") {
+    if(response.success === true && localStorage.getItem("isLogged") === "false") {
       cookie.set("jwt_auth", response.token, {expires: date})
       localStorage.setItem("isLogged", true)
       navigate('/')
@@ -99,6 +101,7 @@ const Login = () => {
         </div>
       </form>
       }
+      <Toaster toastOptions={{style: {background:"#F75D59", color:"white"}}}/>
     </div>
   );
 }

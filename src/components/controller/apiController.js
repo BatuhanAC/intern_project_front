@@ -11,13 +11,12 @@ export const signProcess = (email, password, setter, reqName, name="", lastName=
       })
       .then((response) => {
         setter(response.data)
-        console.log(response.data) 
       })
       .catch((err) => {
         setter(err.response.data)
-        console.log(err.response.data)
       })
   }
+  
   if(reqName === "/register"){
     axios
       .post(`${baseUrl}${reqName}`, {
@@ -28,11 +27,9 @@ export const signProcess = (email, password, setter, reqName, name="", lastName=
       })
       .then((response) => {
         setter(response.data)
-        console.log(response.data) 
       })
       .catch((err) => {
         setter(err.response.data)
-        console.log(err.response.data)
       })
   }
   
