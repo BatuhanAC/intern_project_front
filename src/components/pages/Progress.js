@@ -30,11 +30,9 @@ const Progress = () => {
   useEffect(() => {
     setToday(() => {
       const month = (now.getMonth()+1) < 10 ? `0${now.getMonth()+1}` : `${now.getMonth()+1}`
-
-      return now.getDate() >= 10 ? `${now.getFullYear()}${now.getMonth()+1}${now.getDate()}` :
+      return now.getDate() >= 10 ? `${now.getFullYear()}${month}${now.getDate()}` :
       `${now.getFullYear()}${month}0${now.getDate().toString()}`
     })
-
     setlastWeek(() => {
       const month = getLastWeek.getMonth()+1 < 10 ? `0${getLastWeek.getMonth()+1}` : `${getLastWeek.getMonth()+1}`
       return getLastWeek.getDate() >= 10 ? `${getLastWeek.getFullYear()}${month}${getLastWeek.getDate()}` :
