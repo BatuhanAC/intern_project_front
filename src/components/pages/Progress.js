@@ -136,7 +136,7 @@ const Progress = () => {
         </div>  
         {
           range === 0 && (
-            <table className='table-auto min-w-max'>
+            <table className='table-auto min-w-max '>
               <thead>
                 <tr>
                   <th className='w-20'>
@@ -162,11 +162,11 @@ const Progress = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className=''>
                 {
                   weeklyOrder.map((arg, key) => {
                     return (
-                      <tr key={key} className=' 2xl:h-12 xl:h-11 md:h-10 sm:h-4 h-1'>
+                      <tr key={key} className='even:bg-emerald-300 2xl:h-12 xl:h-11 md:h-10 sm:h-4 h-1'>
                         <td className='font-bold'>
                           {days[arg.day]}:
                         </td>

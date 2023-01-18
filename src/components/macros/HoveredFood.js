@@ -4,7 +4,7 @@ const HoveredFood = ({mousePosition, hoveredFood}) => {
   return (
     <>
       <div style={{top: `${mousePosition.top}px`, left: `${mousePosition.left}px`}}
-      className="absolute z-50 w-max bg-black text-white rounded-3xl p-4">
+      className="absolute z-50 w-max overflow-hidden bg-black text-white rounded-3xl p-4">
         {
           <div className='flex flex-col w-max'>
             <div className='grid grid-cols-1 gap-1 w-full h-full place-items-center'>
