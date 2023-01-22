@@ -5,12 +5,15 @@ import Button from '../micros/Button'
 import Label from '../micros/Label'
 import Option from '../micros/Option'
 import Select from '../micros/Select'
+import toast from 'react-hot-toast';
+import ErrorToaster from "../macros/ErrorToaster";
 
 const cookie = new Cookies()
 const now = new Date()
 const getLastWeek = new Date()
 getLastWeek.setDate(new Date().getDate()-6)
 const days = ["Pzr", "Pzts", "Salı", "Çrş", "Prş", "Cuma", "Cmts"]
+const errorDuration = 2500
 
 const Progress = () => {
   const [range, setRange] = useState(0)
@@ -26,6 +29,19 @@ const Progress = () => {
   const [today, setToday] = useState()
   const [lastWeek, setlastWeek] = useState()
   const [data, setData] = useState([])
+  const [response, setResponse] = useState()
+
+  const addProgress = (currentValue) => {
+    progressProcess(cookie.get("jwt_auth"), setResponse, "/addProgress", currentValue)
+    progressProcess(cookie.get("jwt_auth"), setData, "/getAllProgress")
+  }
+
+  useEffect(() => {
+    if(response !== undefined || null){
+      console.log(JSON.stringify(response))
+      response.success === true ? toast.success(response.message, {duration:errorDuration}) : toast.error(response.message)
+    }
+  }, [response])
 
   useEffect(() => {
     setToday(() => {
@@ -52,27 +68,22 @@ const Progress = () => {
   useEffect(() => {
     if(newData.date){
       if(!(data.find((arg) => arg.date ===parseInt(today))?.date===parseInt(today))){
-        progressProcess(cookie.get("jwt_auth"), null, "/addProgress", newData)
-        setData((d) => [...d, newData])
+        addProgress(newData)
       }
-      else {
-        setData((d) => {
-            let previousValue = d.find(item => item.date === parseInt(today))
+      else if(newData !== null || undefined) {
+            let previousValue = data.find(item => item.date === parseInt(today))
             let currentValue = {
-              neck: newData["neck"] === 0 ? previousValue["neck"] : newData["neck"],
-              chest: newData["chest"] === 0 ? previousValue["chest"] : newData["chest"],
-              waist: newData["waist"] === 0 ? previousValue["waist"] : newData["waist"],
-              hip: newData["hip"] === 0 ? previousValue["hip"] : newData["hip"],
-              arm: newData["arm"] === 0 ? previousValue["arm"] : newData["arm"],
-              weight: newData["weight"] === 0 ? previousValue["weight"] : newData["weight"],
-              fat: newData["fat"] === 0 ? previousValue["fat"] : newData["fat"],
+              neck: newData["neck"] === 0 || null || undefined ? previousValue["neck"] : newData["neck"],
+              chest: newData["chest"] === 0 || null || undefined ? previousValue["chest"] : newData["chest"],
+              waist: newData["waist"] === 0 || null || undefined ? previousValue["waist"] : newData["waist"],
+              hip: newData["hip"] === 0 || null || undefined ? previousValue["hip"] : newData["hip"],
+              arm: newData["arm"] === 0 || null || undefined ? previousValue["arm"] : newData["arm"],
+              weight: newData["weight"] === 0 || null || undefined ? previousValue["weight"] : newData["weight"],
+              fat: newData["fat"] === 0 || null || undefined ? previousValue["fat"] : newData["fat"],
               date: newData["date"],
               day: newData["day"]
             }
-            progressProcess(cookie.get("jwt_auth"), null, "/addProgress", currentValue)
-            return [...d.filter(item => item.date !== parseInt(today)), currentValue]
-          }
-        )
+            addProgress(currentValue)
       }
     }
   }, [newData])
@@ -93,6 +104,7 @@ const Progress = () => {
 
   return (
     <div className='flex flex-col lg:flex-row gap-4 w-full h-full text-black z-10 text-center font-medium'>
+      <ErrorToaster position={"top-center"}/>
       <div className='grid grid-cols-2 gap-2 shadow-md shadow-emerald-300 bg-emerald-300 w-full h-full rounded-3xl p-3'>
           <Label type={"number"} placeholder="kg" setState={setWeight} >Kilo</Label>
           <Label type={"number"} placeholder="%" setState={setFat} >Yağ Oranı</Label>

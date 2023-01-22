@@ -39,7 +39,7 @@ const Login = () => {
 
   useEffect(() => {
     if(response.success === false) {
-      toast(response.message)
+      toast.error(response.message)
     }
 
     if(response.success === true && localStorage.getItem("isLogged") === "false") {
