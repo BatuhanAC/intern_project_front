@@ -84,14 +84,16 @@ export const progressProcess = (token, setter, reqName, progressData) => {
       .then((response) => {
         if(response.data.success)
           {
-            setter.setResponse(response.data)
+            setter.setResponse({success:response.data.success, message:response.data.message})
             setter.setData(response.data.data.values)
         }
         else
-          console.log(response.data.success)
+          {
+            setter.setResponse({success:response.data.success, message:response.data.message})
+          }
       })
       .catch((err) => {
-        console.log(err.message)
+        setter.setResponse(err.response.data)
       })
   }
 }

@@ -31,9 +31,8 @@ const Progress = () => {
   const [data, setData] = useState([])
   const [response, setResponse] = useState()
 
-  const addProgress = (currentValue) => {
-    progressProcess(cookie.get("jwt_auth"), {setResponse, setData}, "/addProgress", currentValue)
-    
+  const addProgress = (value) => {
+    progressProcess(cookie.get("jwt_auth"), {setResponse, setData}, "/addProgress", value)
   }
 
   useEffect(() => {
