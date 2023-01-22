@@ -83,7 +83,10 @@ export const progressProcess = (token, setter, reqName, progressData) => {
       }, {headers: {"Authorization":`Bearer ${token}`}})
       .then((response) => {
         if(response.data.success)
-          setter(response.data)
+          {
+            setter.setResponse(response.data)
+            setter.setData(response.data.data.values)
+        }
         else
           console.log(response.data.success)
       })

@@ -32,13 +32,12 @@ const Progress = () => {
   const [response, setResponse] = useState()
 
   const addProgress = (currentValue) => {
-    progressProcess(cookie.get("jwt_auth"), setResponse, "/addProgress", currentValue)
-    progressProcess(cookie.get("jwt_auth"), setData, "/getAllProgress")
+    progressProcess(cookie.get("jwt_auth"), {setResponse, setData}, "/addProgress", currentValue)
+    
   }
 
   useEffect(() => {
     if(response !== undefined || null){
-      console.log(JSON.stringify(response))
       response.success === true ? toast.success(response.message, {duration:errorDuration}) : toast.error(response.message)
     }
   }, [response])
